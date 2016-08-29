@@ -1,15 +1,26 @@
 /*commentaire*/
 .form {
     background-color: #202020;
-    color: azure;
+    color: black;
     border-radius: 15px;
     padding: 10px;
     border: 5px darkslategrey ridge;
 }
-input {
+.description {
+    color: azure !important;
+}
+input[type=submit] {
     margin: 2% 0%;
+    background: white;
+    color: black !important;
+    cursor: pointer;
+}
+input[type=submit]:hover {
+    background: gray;
     color: black !important;
 }
+
 textarea {
     margin: 2% 0%;
+    color: black !important;
 }

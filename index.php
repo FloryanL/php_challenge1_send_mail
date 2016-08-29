@@ -10,34 +10,63 @@
 </head>
 
 <body>
+
+    <?php
+        if(!empty($_POST)){
+            extract($_POST);    
+            $valid = true;
+            if(empty($nom)){
+                $valid=false;
+                $erreurnom="Vous an'avez pas rempli votre nom";
+            }
+            if(empty($email)){
+                $valid=false;
+                $erreuremail="Vous an'avez pas rempli votre email";
+            }
+            if(empty($message)){
+                $valid=false;
+                $erreurmessage="Vous an'avez pas rempli votre message";
+            }
+
+            if($valid){
+                echo "tous les champs sont bons";
+            }
+        }
+    ?>
     
     <section id="section" class="container-fluid">
         <div class="col-lg-4"></div>
-        <div class="container text-center col-lg-4 form">
+        <div class="container text-center col-lg-4 form description">
             <h2>Formulaire de contact</h2>
             <hr class="section1">
-            <p>Challenge sur l'envoi de mail.<br> Voici le formulaire !!</p>
+            <p>Me contacter :</p>
 
-            <form method="" action="javascript:sendMail()">
+            <form method="post" action="index.php">
             <table border="0" cellspacing="1" width="400">
                 <tr>
-                <td width="98">Destinataire</td>
+                <td width="98" class="description">Email</td>
                 <td width="295">
-                    <input type="text" id="edTo" size="30"></td>
+                    <input type="text" id="email" size="30">
+                    <span id="error-message"><?php if(isset($erreurnom)) echo $erreurnom; ?></span>
+                </td>
                 </tr>
                 <tr>
-                <td width="98">Sujet</td>
+                <td width="98" class="description">Nom</td>
                 <td width="295">
-                    <input type="text" id="edSubject" size="30"></td>
+                    <input type="text" id="nom" size="30">
+                    <span id="error-message"></span>
+                </td>
                 </tr>
                 <tr>
-                <td width="98">Message</td>
+                <td width="98" class="description">Message</td>
                 <td width="295">
-                    <textarea rows="3" id="edBody" cols="30"></textarea></td>
+                    <textarea rows="3" id="message" cols="30"></textarea>
+                    <span id="error-message"></span>
+                </td>
                 </tr>
-            </table>
-            <br>
-            <input type="submit" value="Envoyer">
+                </table>
+                <br>
+                <input type="submit" value="Envoyer">
             </form>
 
         </div>
