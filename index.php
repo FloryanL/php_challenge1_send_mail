@@ -12,28 +12,52 @@
 <body>
 
     <?php
+
         if(!empty($_POST)){
             extract($_POST);    
             $valid = true;
             if(empty($nom)){
                 $valid=false;
-                $erreurnom="Vous an'avez pas rempli votre nom";
+                $erreurnom="Vous n'avez pas rempli votre nom";
             }
             if(!preg_match("/^[a-z0-9\-_.]+@[a-z0-9\-_.]+\.[a-z]{2,3}$/i",$email)){
+                $valid = false;
                 echo "email pas valide";
             }
             if(empty($email)){
                 $valid=false;
-                $erreuremail="Vous an'avez pas rempli votre email";
+                $erreuremail="Vous n'avez pas rempli votre email";
             }
             if(empty($message)){
                 $valid=false;
-                $erreurmessage="Vous an'avez pas rempli votre message";
+                $erreurmessage="Vous n'avez pas rempli votre message";
             }
 
             if($valid){
+                $to="floryan.lollivier@gmail.com";
+                $sujet = 'Sujet de l\'email';
+                $message = stripcslashes($message);
+                $nom = stripcslashes($nom);
+                $headers = "From: $nom <$email>";
+                $headers .= "Reply-To: $email";
+                if(mail($nom,$sujet,$message,$headers))
+                    {
+                        echo "L'email a bien été envoyé.";
+                        unset($nom);
+                        unset($email);
+                        unset($message);
+                    }
+                    else
+                    {
+                        echo "Une erreur c'est produite lors de l'envois de l'email.";
+                    }
+
                 echo "tous les champs sont bons";
             }
+            
+        }
+        if ($valid) {
+            $valid = false;
         }
     ?>
     <?php require('captcha.php'); ?>
