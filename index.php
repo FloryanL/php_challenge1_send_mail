@@ -36,6 +36,7 @@
             }
         }
     ?>
+    <?php require('captcha.php'); ?>
     
     <section id="section" class="container-fluid">
         <div class="col-lg-4"></div>
@@ -71,6 +72,9 @@
                 </tr>
                 </table>
                 <br>
+                <label for="captcha">Recopiez le mot : "<?php echo captcha(); ?>" </label>
+
+                <input type="text" name="captcha" id="captcha" /><br />
                 <input type="submit" value="Envoyer">
             </form>
 
