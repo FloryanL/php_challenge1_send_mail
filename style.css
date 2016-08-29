@@ -9,6 +9,9 @@
 .description {
     color: azure !important;
 }
+input {
+    color: black !important;
+}
 input[type=submit] {
     margin: 2% 0%;
     background: white;
@@ -19,7 +22,9 @@ input[type=submit]:hover {
     background: gray;
     color: black !important;
 }
-
+.error-message {
+    color: red;
+}
 textarea {
     margin: 2% 0%;
     color: black !important;

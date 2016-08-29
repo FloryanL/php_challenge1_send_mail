@@ -19,6 +19,9 @@
                 $valid=false;
                 $erreurnom="Vous an'avez pas rempli votre nom";
             }
+            if(!preg_match("/^[a-z0-9\-_.]+@[a-z0-9\-_.]+\.[a-z]{2,3}$/i",$email)){
+                echo "email pas valide";
+            }
             if(empty($email)){
                 $valid=false;
                 $erreuremail="Vous an'avez pas rempli votre email";
@@ -44,24 +47,26 @@
             <form method="post" action="index.php">
             <table border="0" cellspacing="1" width="400">
                 <tr>
-                <td width="98" class="description">Email</td>
-                <td width="295">
-                    <input type="text" id="email" size="30">
-                    <span id="error-message"><?php if(isset($erreurnom)) echo $erreurnom; ?></span>
-                </td>
-                </tr>
-                <tr>
                 <td width="98" class="description">Nom</td>
                 <td width="295">
-                    <input type="text" id="nom" size="30">
-                    <span id="error-message"></span>
+                    <input type="text" id="nom" value="<?php if(isset($nom)) echo $nom; ?>" size="30">
+                    <span class="error-message"><?php if(isset($erreurnom)) echo $erreurnom; ?></span>
                 </td>
                 </tr>
+
+                <tr>
+                <td width="98" class="description">Email</td>
+                <td width="295">
+                    <input type="text" id="email" value="<?php if(isset($email)) echo $email; ?>" size="30">
+                    <span class="error-message"><?php if(isset($erreuremail)) echo $erreuremail; ?></span>
+                </td>
+                </tr>
+                
                 <tr>
                 <td width="98" class="description">Message</td>
                 <td width="295">
-                    <textarea rows="3" id="message" cols="30"></textarea>
-                    <span id="error-message"></span>
+                    <textarea rows="3" id="message" value="<?php if(isset($message)) echo $message; ?>" cols="30"></textarea>
+                    <span class="error-message"><?php if(isset($erreurmessage)) echo $erreurmessage; ?></span>
                 </td>
                 </tr>
                 </table>
