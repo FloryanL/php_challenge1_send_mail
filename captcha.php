@@ -1,7 +1,7 @@
 <?php
     function motListe()
     {
-        $liste = array_merge(range('a','z'),range('A','Z'),range('0','9'))/*array('internet', 'captcha', 'robot');*/;
+        $liste = array('LaGrVadrouille', 'captcha', 'robot','TontonFlingueur');
         return $liste[array_rand($liste)];
     }
 
@@ -10,7 +10,8 @@
         $mot = motListe();
         $_SESSION['captcha'] = $mot;
         return $mot;
-    }/*
+    }
+    /*
     function motHasard($n)
     {
         $lettres = array_merge(range('a','z'),range('A','Z'),range('0','9'));
