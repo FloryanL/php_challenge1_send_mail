@@ -1,0 +1,15 @@
+/*commentaire*/
+.form {
+    background-color: #202020;
+    color: azure;
+    border-radius: 15px;
+    padding: 10px;
+    border: 5px darkslategrey ridge;
+}
+input {
+    margin: 2% 0%;
+    color: black !important;
+}
+textarea {
+    margin: 2% 0%;
+}
