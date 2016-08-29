@@ -1,111 +1,80 @@
-<!Doctype html>
+<?php
+    if(!empty($_POST)) {
+        extract($_POST);
+        $valid = true;
+        if(empty($nom)){
+            $valid=false;
+            $erreurnom="Vous n'avez pas rempli votre nom";
+        }
+        if(!preg_match("/^[a-z0-9\-_.]+@[a-z0-9\-_.]+\.[a-z]{2,3}$/i",$email)){
+            $valid = false;
+            $erreuremail="Votre email n'est pas valide";
+        }
+        if(empty($email)){
+            $valid=false;
+            $erreuremail="Vous n'avez pas rempli votre email";
+        }
+        if(empty($message)){
+            $valid=false;
+            $erreurmessage="Vous n'avez pas rempli votre message";
+        }
 
+        if($valid){
+            $to = "floryan.lollivier@gmail.com";
+            $sujet = $nom." a contacté le site";
+            $header = "From : $nom <$email>";
+            if(mail($to,$sujet,$message,$header)){
+                $erreur = "Votre message m'est bien parvenue";
+                unset($nom);
+                unset($email);
+                unset($message);
+            }
+            else{
+                $erreur = "Une erreur est survenue et votre mail n'est pas parti";
+            }
+        }
+    }
+?>
+
+<!Doctype html>
 <head>
     <meta charset="utf-8">
     <title>Send mail</title>
     <link type="text/css" rel="stylesheet" href="style.css" />
-    <script src="js/game.js" type="text/javascript"></script>
     <link <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Slabo+27px' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
-
-    <?php
-
-        if(!empty($_POST)){
-            extract($_POST);    
-            $valid = true;
-            if(empty($nom)){
-                $valid=false;
-                $erreurnom="Vous n'avez pas rempli votre nom";
-            }
-            if(!preg_match("/^[a-z0-9\-_.]+@[a-z0-9\-_.]+\.[a-z]{2,3}$/i",$email)){
-                $valid = false;
-                echo "email pas valide";
-            }
-            if(empty($email)){
-                $valid=false;
-                $erreuremail="Vous n'avez pas rempli votre email";
-            }
-            if(empty($message)){
-                $valid=false;
-                $erreurmessage="Vous n'avez pas rempli votre message";
-            }
-
-            if($valid){
-                $to="floryan.lollivier@gmail.com";
-                $sujet = 'Sujet de l\'email';
-                $message = stripcslashes($message);
-                $nom = stripcslashes($nom);
-                $headers = "From: $nom <$email>";
-                $headers .= "Reply-To: $email";
-                if(mail($nom,$sujet,$message,$headers))
-                    {
-                        echo "L'email a bien été envoyé.";
-                        unset($nom);
-                        unset($email);
-                        unset($message);
-                    }
-                    else
-                    {
-                        echo "Une erreur c'est produite lors de l'envois de l'email.";
-                    }
-
-                echo "tous les champs sont bons";
-            }
-            
-        }
-        if ($valid) {
-            $valid = false;
-        }
-    ?>
-    <?php require('captcha.php'); ?>
-    
-    <section id="section" class="container-fluid">
-        <div class="col-lg-4"></div>
+    <div id="contenu" class="container-fluid">
+    <div class="col-lg-4"></div>
         <div class="container text-center col-lg-4 form description">
-            <h2>Formulaire de contact</h2>
-            <hr class="section1">
-            <p>Me contacter :</p>
-
+            <h1>Formulaire de contact</h1>
+            <h2>Me contacter :</h2>
+            <hr/>
+            <?php
+                if(isset($erreur)){ echo "<p>$erreur</p>"; }
+            ?>
             <form method="post" action="index.php">
-            <table border="0" cellspacing="1" width="400">
-                <tr>
-                <td width="98" class="description">Nom</td>
-                <td width="295">
-                    <input type="text" id="nom" value="<?php if(isset($nom)) echo $nom; ?>" size="30">
-                    <span class="error-message"><?php if(isset($erreurnom)) echo $erreurnom; ?></span>
-                </td>
-                </tr>
+            <label for="nom">Nom :</label>
+            <input type="text" name="nom" id="nom" value="<?php if(isset($nom)) echo $nom; ?>"/>
+            <span class="error-message"><?php if(isset($erreurnom)) echo $erreurnom; ?></span>
+            <br/>
 
-                <tr>
-                <td width="98" class="description">Email</td>
-                <td width="295">
-                    <input type="text" id="email" value="<?php if(isset($email)) echo $email; ?>" size="30">
-                    <span class="error-message"><?php if(isset($erreuremail)) echo $erreuremail; ?></span>
-                </td>
-                </tr>
-                
-                <tr>
-                <td width="98" class="description">Message</td>
-                <td width="295">
-                    <textarea rows="3" id="message" value="<?php if(isset($message)) echo $message; ?>" cols="30"></textarea>
-                    <span class="error-message"><?php if(isset($erreurmessage)) echo $erreurmessage; ?></span>
-                </td>
-                </tr>
-                </table>
-                <br>
-                <label for="captcha">Recopiez le mot : "<?php echo captcha(); ?>" </label>
+            <label for="email">Email :</label>
+            <input type="text" name="email" id="email" value="<?php if(isset($email)) echo $email; ?>"/>
+            <span class="error-message"><?php if(isset($erreuremail)) echo $erreuremail; ?></span>
+            <br/>
 
-                <input type="text" name="captcha" id="captcha" /><br />
-                <input type="submit" value="Envoyer">
-            </form>
+            <label for="message">Votre message :</label>
+            <textarea name="message" id="message"><?php if(isset($message)) echo $message; ?></textarea><br/>
+            <span class="error-message"><?php if(isset($erreurmessage)) echo $erreurmessage; ?></span>
+            <br/>
 
+            <input type="submit" value="Envoyer">
         </div>
-        <div class="col-lg-4"></div>
-    </section>
-
+    <div class="col-lg-4"></div>
+    </div>
 </body>
 
 </html>
