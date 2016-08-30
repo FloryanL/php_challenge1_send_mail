@@ -28,7 +28,15 @@
             if(empty($message)){
                 $valid=false;
                 $erreurmessage="Vous n'avez pas rempli votre message";
+            }/*
+            if(empty($_SESSION['captcha'] != $mot)) {
+                $valid=false;
+                $erreurmessage="Vous êtes un robot";
             }
+            else {
+                $valid=true;
+                $erreurmessage="Vous n'êtes pas un robot";
+            }*/
 
             if($valid){
                 $to = "floryan.lollivier@gmail.com";
